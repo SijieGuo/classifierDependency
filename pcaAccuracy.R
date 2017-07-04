@@ -44,13 +44,12 @@ pcaAccuracy <- function(pcaName, dataset, lowDim, highDim)
     
         predict <- knn(train = data.matrix(trainMatrix[,1:nComp]), test = data.matrix(testMatrix[,1:nComp]), cl = trainMatrix[,nComp+1],k=1)
         #calculate accuracy        
-        pca_acc <- c(pca_acc,mean(predict==testMatrix[,nComp+1]))
+       output_acc[nComp - lowDim + 1, k, i] <- mean(predict==testMatrix[,nComp+1])
         
       }
-      avg_acc <- c(avg_acc, mean(pca_acc))
+     
     }
-    dim_acc <- c(dim_acc, mean(avg_acc))
-   # dim_acc <- c(dim_acc, cbind(dim_acc, avg_acc))
+   
   }
-  dim_acc
+   output_acc
 }
