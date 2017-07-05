@@ -8,14 +8,14 @@ datasetLoader <- function (datasetName)
   switch(datasetName,
          #1.australian dataset
          australian={
-          dataLoad <- read.csv(file="D:/大四下/analysis/R code/australian.data",header=FALSE,sep=" ")
+          dataLoad <- read.csv(file="~/analysis/Rcode/australian.data",header=FALSE,sep=" ")
           dataset$attributes <- sapply(dataLoad[complete.cases(dataLoad),1:14],as.numeric)
           dataset$class <- dataLoad[complete.cases(dataLoad),15]
           dataset$name <- "australian"
          },
          #2. balance dataset
          balance={ 
-           dataLoad <-read.csv(file="D:/大四下/analysis/R code/balance-scale.data",header=FALSE,sep=",")
+           dataLoad <-read.csv(file="~/analysis/Rcode/balance-scale.data",header=FALSE,sep=",")
            dataset$attributes <- sapply(dataLoad[complete.cases(dataLoad),2:5],as.numeric)
            dataset$class <- dataLoad[complete.cases(dataLoad),1]
            dataset$name <- "balance"
@@ -32,7 +32,7 @@ datasetLoader <- function (datasetName)
          
          #4. dermatology dataset
          dermatology ={
-           dataLoad <-read.csv(file="D:/大四下/analysis/R code/dermatology.data",header=FALSE,sep=",")
+           dataLoad <-read.csv(file="~/analysis/Rcode/dermatology.data",header=FALSE,sep=",")
            dataset$attributes <- sapply(dataLoad[complete.cases(dataLoad),1:34],as.numeric)
            dataset$class <- dataLoad[complete.cases(dataLoad),35]
            dataset$name <- "dermatology"
@@ -40,7 +40,7 @@ datasetLoader <- function (datasetName)
          
          #5. heart dataset 
          heart={
-           dataLoad <-read.csv(file="D:/大四下/analysis/R code/processed.cleveland.data",header=FALSE,sep=",")
+           dataLoad <-read.csv(file="~/analysis/Rcode/processed.cleveland.data",header=FALSE,sep=",")
            dataset$attributes <- sapply(dataLoad[complete.cases(dataLoad),1:13],as.numeric)
            dataset$class <- dataLoad[complete.cases(dataLoad),14]
            dataset$name <- "heart"
@@ -66,7 +66,7 @@ datasetLoader <- function (datasetName)
          
          #8. liver dataset
          liver={
-           dataLoad <-read.csv(file="D:/大四下/analysis/R code/bupa.data",header=FALSE,sep=",")
+           dataLoad <-read.csv(file="~/analysis/Rcode/bupa.data",header=FALSE,sep=",")
            dataset$attributes <- sapply(dataLoad[complete.cases(dataLoad),1:6],as.numeric)
            dataset$class <- dataLoad[complete.cases(dataLoad),7]
            dataset$name <- "liver"
@@ -92,7 +92,7 @@ datasetLoader <- function (datasetName)
          
          #11. waveform dataset
          waveform={
-           dataLoad <-read.csv(file="D:/大四下/analysis/R code/waveform-+noise.data",header=FALSE,sep=",")
+           dataLoad <-read.csv(file="~/analysis/Rcode/waveform-+noise.data",header=FALSE,sep=",")
            dataset$attributes <- sapply(dataLoad[complete.cases(dataLoad),1:21],as.numeric)
            dataset$class <- dataLoad[complete.cases(dataLoad),41]
            dataset$name <- "waveform"
@@ -100,7 +100,7 @@ datasetLoader <- function (datasetName)
          
          #12. yeast dataset
          yeast ={
-           dataLoad <-read.csv(file="D:/大四下/analysis/R code/yeast.data",header=FALSE,sep=" ")
+           dataLoad <-read.csv(file="~/analysis/Rcode/yeast.data",header=FALSE,sep=" ")
            dataset$attributes <- sapply(dataLoad[,2:18],as.numeric)
            dataset$class <- dataLoad[,19]
            dataset$name <- "yeast"
