@@ -12,15 +12,15 @@ pcaAccuracy <- function(pcaName, dataset, classifierName, lowDim, highDim)
   library(randomForest)
   library(naivebayes)
   library(C50)
-  source("./datasetLoader.R")
-  source("./pcaLoader.R")
-  #source("./classifierLoader.R")
+  source("~/analysis/Rcode/datasetLoader.R")
+  source("~/analysis/Rcode/pcaLoader.R")
+  source("~/analysis/Rcode/classifierLoader.R")
   newData <- datasetLoader(dataset)
   #set seeds
   seeds <- c(1234, 1989, 290889, 251091, 240664, 190364, 120863, 101295, 31089, 3573113)
   
-  dim_acc <- c()
-  output_acc <- array(0, dim = c(highDim - lowDim + 1, 10, 10))
+  #dim_acc <- c()
+  outputAcc <- array(0, dim = c(highDim - lowDim + 1, 10, 10))
   for(nComp in lowDim:highDim){
     #avg_acc <- c()
     for(k in 1:length(seeds)){#shuffle 10 times
@@ -30,7 +30,7 @@ pcaAccuracy <- function(pcaName, dataset, classifierName, lowDim, highDim)
       chAtt <- runif(nrow(dataAtt))
       dataAtt <- dataAtt[order(chAtt),]
       dataClass <- dataClass[order(chAtt)]
-      pca_acc <- numeric()
+      #pca_acc <- numeric()
       
       #Create 10 equally size folds
       folds <- cut(seq(1,nrow(dataAtt)),breaks=10,labels=FALSE)
@@ -49,34 +49,37 @@ pcaAccuracy <- function(pcaName, dataset, classifierName, lowDim, highDim)
         testPca <- data.matrix(testData) %*% pcaLoad$loadings
         
         # function return testpca and trainpca
-        trainMatrix <- cbind(trainPca, trainClass)
-        testMatrix <- cbind(testPca, testClass)
+        #knn
+        #trainMatrix <- cbind(trainPca, trainClass)
+        #testMatrix <- cbind(testPca, testClass)
         # Apply knn with k = 1
-        # load classifier loader return accuracy
+        # load classifier loader return accuracy  
+         # print(trainData)
+        # print(trainClass)
+        # print(testPca)
+        # print(testClass)
+        print(classifierLoader(trainPca, trainClass, testPca, testClass, nComp, classifierName))
+        outputAcc[nComp - lowDim + 1, k, i] <- classifierLoader(trainPca, trainClass, testPca, testClass, nComp, classifierName)
         #predict <- classifierLoader(trainMatrix, testMatrix, nComp, classifierName)
         #knn
         #predict <- knn(train = data.matrix(trainMatrix[,1:nComp]), test = data.matrix(testMatrix[,1:nComp]), cl = trainMatrix[,nComp+1],k=1)
-        print(trainClass)
-        print(trainPca)
-        predict <- randomForest(trainClass,trainPca)
+
+        #predict <- randomForest(trainClass,trainPca)
         #predict <- predict(prerf, testMatrix[,1:nComp])
         #randomForest
         #predict <- randomForest(testPca,testClass,prox = TRUE)
         #rf <- randomForest(trainPca[,1:nComp-1],trainClass[,1:nComp-1],prox = TRUE)
         #pr <- classCenter(trainPca[,1:nComp-1],trainClass[,1:nComp-1],rf$prox)
         
-        #gbm
+        #randomForest
+        #predict <- randomForest(testPca,testClass,prox = TRUE)
+        # modelFit <- train(trainPca, trainClass, method = "gbm")
+        # confusionMx     <- table(testClass, predict(modelFit, testPca))
+        # outputAcc[nComp - lowDim + 1, k, i] <- sum(diag(confusionMx))/sum(confusionMx)
         
-        
-        #nb
-        
-        
-        #C50
-        
-        
-        
+
         #calculate accuracy 
-        output_acc[nComp - lowDim + 1, k, i] <- mean(predict==testMatrix[,nComp+1])
+        #output_acc[nComp - lowDim + 1, k, i] <- mean(predict==testMatrix[,nComp+1])
         #output_acc[nComp - lowDim + 1, k, i] <- mean(pr==trainPca[,nComp-1])
         #pca_acc<-c(iris_acc,mean(predict==testMatrix[,nComp+1]))
       }
@@ -85,6 +88,7 @@ pcaAccuracy <- function(pcaName, dataset, classifierName, lowDim, highDim)
     #dim_acc <- c(dim_acc,mean(avg_acc))
     # dim_acc <- c(dim_acc, cbind(dim_acc, avg_acc))
   }
-  output_acc
+  outputAcc
   #dim_acc
 }
+
